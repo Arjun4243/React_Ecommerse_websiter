@@ -5,6 +5,7 @@ import {Routes,Route} from 'react-router-dom'
 import Home from "./pages/home/Home";
 import Cart from "./pages/cart/Cart"
 import PlaceOrder from './pages/placeOrder/PlaceOrder'
+import "bootstrap/dist/css/bootstrap.rtl.min.css";
 
 const App = () => {
   return (
