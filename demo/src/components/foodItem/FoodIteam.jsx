@@ -1,11 +1,26 @@
-import React from 'react'
+import React,{useState} from 'react'
 import "./FoodIteam.css"
 import { assets } from '../../assets/assets'
 const FoodIteam = ({id,name,price,description,image}) => {
+
+    const [itemCount,setIteamCount]=useState(0)
+
   return (
-    <div className='food-item col-sm-12 col-md-6 col-lg-3  '>
+    <div className='food-item m-3 col-sm-5  col-md-3 col-lg-2  '>
         <div className="food-item-img-container">
-            <img className="food-item-image img-fluid rounded " src={image} alt="" />
+            <img className="food-item-image img-fluid my-3 rounded  " src={image} alt="" />
+            
+            {!itemCount
+            
+            ?<img className='add' onClick={()=>setIteamCount(prev=>prev+1)} src={assets.add_icon_white}></img>
+            
+            :
+            <div className="food-item-counter">
+                <img onClick={()=>setIteamCount(prev=>prev-1)} src={assets.remove_icon_red}/>
+                <p>{itemCount}</p>
+                <img onClick={()=>setIteamCount(prev=>prev+1)} src={assets.add_icon_green}/>
+            </div>
+            }
         </div>
         <div className="food-item-info">
             <div className="food-item-name-rating">
