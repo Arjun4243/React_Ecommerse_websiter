@@ -6,6 +6,7 @@ import Home from "./pages/home/Home";
 import Cart from "./pages/cart/Cart"
 import PlaceOrder from './pages/placeOrder/PlaceOrder'
 import "bootstrap/dist/css/bootstrap.rtl.min.css";
+import Footer from './components/footer/Footer';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/cart" element={<Cart/>}/>
         <Route path='/order' element={<PlaceOrder/>}/>
       </Routes>
+      <Footer/>
       </div>
 
   )
