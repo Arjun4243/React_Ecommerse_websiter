@@ -4,7 +4,7 @@ import "./Cart.css"
 import { useNavigate } from 'react-router-dom'
 const Cart = () => {
 
-  const { cartItem, food_list, removeFromCart,getTotalCartAmount} = useContext(StoreContext)
+  const { cartItem, food_list, removeFromCart,getTotalCartAmount,url} = useContext(StoreContext)
 
   const navigate = useNavigate()
 
@@ -25,17 +25,14 @@ const Cart = () => {
           {food_list.map((e, index) => {
             if (cartItem[e._id] > 0) {
               return (
-
-                <div>
-
+                <div key={e._id}>
                   <div className="cart-items-title cart-items-item">
-                    <img src={e.image} alt="" />
+                    <img src={url + "/images/" + e.image} alt="" />
                     <p>{e.name}</p>
                     <p>${e.price}</p>
                     <p>{cartItem[e._id]}</p>
                     <p>${e.price * cartItem[e._id]}</p>
                     <p className='cross' onClick={() => removeFromCart(e._id)}>x</p>
-
                   </div>
                   <hr />
                 </div>
