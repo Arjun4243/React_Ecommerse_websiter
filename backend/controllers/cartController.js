@@ -48,18 +48,16 @@ const removeFromCart=async(req,res)=>{
 
 //fatching user Cart data
 
-const getCart=async(req,res)=>{
+const getCart = async (req, res) => {
+  try {
+    const userData = await userModel.findById(req.userId); // ✅ use req.userId
+    const cartData = userData.cartData;
+    res.json({ success: true, cartData });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Error fetching cart data" });
+  }
+};
 
-    try{
-        const userData=await userModel.findById(req.body.userId);
-        const cartData=userData.cartData;
-        res.json({success:true,cartData});
-    }
-    catch(error){
-        console.log(error);
-        res.json({success:false,message:"Error fetching cart data"});
-    }
-
-}
 
 export { addToCart, removeFromCart, getCart };

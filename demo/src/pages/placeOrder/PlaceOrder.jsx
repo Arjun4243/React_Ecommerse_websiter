@@ -1,10 +1,31 @@
 import React, { useContext } from 'react'
 import "./PlaceOrder.css"
 import { StoreContext } from '../../context/StoreContext'
+import { useState } from 'react'
 
 const PlaceOrder = () => {
 
-const {getTotalCartAmount} = useContext(StoreContext)
+const {getTotalCartAmount,url,token,food_list,cartItems} = useContext(StoreContext)
+
+const [data,setData]=useState({
+  firstName:"",
+  lastName:"",
+  email:"",
+  street:"",
+  city:"",
+  state:"",
+  zipcod:"",
+  country:"",
+  phone:"",
+})
+
+const onChangeHandler=(event)=>{
+  
+  const name=event.target.name;
+  const value=event.target.value;
+
+  setData(data => ({ ...data, [name]: value }));
+}
   return (
     <form action="" className='place-order'>
 
