@@ -22,6 +22,7 @@ const FoodIteam = ({ id, name, price, description, image }) => {
                 />
 
                 {!cartItem[id] ? (
+                    
                     <img
                         className="add"
                         onClick={() => addToCart(id)}
@@ -43,6 +44,7 @@ const FoodIteam = ({ id, name, price, description, image }) => {
                         />
                     </div>
                 )}
+            
             </div>
             <div className="food-item-info">
                 <div className="food-item-name-rating">
