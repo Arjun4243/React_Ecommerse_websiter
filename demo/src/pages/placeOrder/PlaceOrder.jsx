@@ -3,6 +3,7 @@ import "./PlaceOrder.css"
 import { StoreContext } from '../../context/StoreContext'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 const PlaceOrder = () => {
@@ -10,7 +11,8 @@ const PlaceOrder = () => {
 const navigate = useNavigate();
 
 
-  const { getTotalCartAmount, url, token, food_list, cartItem } = useContext(StoreContext)
+
+  const { getTotalCartAmount, url, token, food_list, cartItem,setTransection_id,setPaymentTotalAmount,} = useContext(StoreContext)
 
 
 
@@ -26,6 +28,7 @@ const navigate = useNavigate();
     phone: "",
   })
 
+  //here we save all data that fill by user in the data obejct 
   const onChangeHandler = (event) => {
 
     const name = event.target.name;
@@ -57,7 +60,16 @@ const navigate = useNavigate();
       amount:getTotalCartAmount()+2,
     }
 
-    let response= axios.post(url+"/api/order/place",orderData,{headers:{token}})
+    let response=await axios.post(url+"/api/order/place",orderData,{headers:{token}});
+    let paymentSend= await axios.post(url+"/api/payment/send",orderData,{headers:{token}})
+
+    if(paymentSend.data.success)
+    {
+      setTransection_id(paymentSend.data.transectionId)
+      setPaymentTotalAmount(paymentSend.data.totalAmount)
+      console.log("transection Id",paymentSend.data.transectionId)
+    }
+
     if(response.data.sucsess){
       window.location.replace(session_url)
     }
@@ -110,7 +122,7 @@ const navigate = useNavigate();
               <b>${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}</b>
             </div>
           </div>
-          <button type="submit"  onClick={() =>{ navigate("/order");navigate("/payment")}}>Process to Checkout</button>
+          <button type="submit"  onClick={() =>{navigate("/payment")}}>Process to Checkout</button>
         </div>
 
       </div>

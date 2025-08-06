@@ -81,6 +81,9 @@ export const StoreContextProvider = (props) => {
     loadData();
   }, []);
 
+  
+  const [transection_id,setTransection_id] = useState()
+  const [paymentTotalAmount,setPaymentTotalAmount]=useState()
   const contextValue = {
     food_list,
     cartItem,
@@ -91,7 +94,13 @@ export const StoreContextProvider = (props) => {
     url,
     token,
     setToken,
-    isFoodListLoading // ✅ expose loading state
+    isFoodListLoading,
+    setTransection_id,
+    transection_id,
+    paymentTotalAmount,
+    setPaymentTotalAmount,
+    
+
   };
 
   return (
