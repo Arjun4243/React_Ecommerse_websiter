@@ -7,10 +7,7 @@ const FoodIteam = ({ id, name, price, description, image }) => {
 
     const { cartItem, addToCart, removeFromCart,url } = useContext(StoreContext);
 
-    useEffect(() => {
-    console.log(cartItem, "cartData");
-    console.log("Arjun");
-}, []);
+  
 
     return (
         <div className="food-item m-3 col-sm-5 col-md-3 col-lg-2 ">

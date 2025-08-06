@@ -6,7 +6,7 @@ export const StoreContext = createContext(null);
 export const StoreContextProvider = (props) => {
   const [cartItem, setCartItems] = useState({});
   const url = "http://localhost:4000";
-  const [token, setToken] = useState(""); 
+  const [token, setToken] = useState("");
   const [food_list, setFoodList] = useState([]);
   const [isFoodListLoading, setIsFoodListLoading] = useState(true); // ✅ loading state
 
@@ -48,8 +48,7 @@ export const StoreContextProvider = (props) => {
   const fatchFoodList = async () => {
     try {
       const response = await axios.get(url + "/api/food/list");
-      setFoodList(response.data.data);
-      console.log("Fetched food list:", response.data.data); // ✅ log food list
+      setFoodList(response.data.data); // ✅ log food list
     } catch (error) {
       console.error("Failed to fetch food list:", error);
     } finally {
@@ -57,17 +56,17 @@ export const StoreContextProvider = (props) => {
     }
   };
 
-const loadCartData = async (token) => {
-  try {
-    const response = await axios.get(url + "/api/cart/get", { headers: { token } });
-    console.log("Full cart response:", response.data); // ✅ log full response
-    const cart = response.data.cartData || response.data; // fallback if cartData is missing
-    setCartItems(cart);
-    console.log("Loaded cart items:", cart);
-  } catch (error) {
-    console.error("Failed to load cart data:", error);
-  }
-};
+  const loadCartData = async (token) => {
+    try {
+      const response = await axios.get(url + "/api/cart/get", { headers: { token } });
+
+      const cart = response.data.cartData || response.data; // fallback if cartData is missing
+      setCartItems(cart);
+
+    } catch (error) {
+      console.error("Failed to load cart data:", error);
+    }
+  };
 
   useEffect(() => {
     async function loadData() {

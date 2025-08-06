@@ -8,6 +8,8 @@ import PlaceOrder from './pages/placeOrder/PlaceOrder'
 import "bootstrap/dist/css/bootstrap.rtl.min.css";
 import Footer from './components/footer/Footer';
 import LoginPopUp from './components/LoginPopup/LoginPopUp';
+import Payment from './pages/payment/payment';
+
 
 const App = () => {
 
@@ -21,6 +23,7 @@ const App = () => {
           <Route path='/' element={<Home/>}/>
           <Route path="/cart" element={<Cart/>}/>
           <Route path='/order' element={<PlaceOrder/>}/>
+          <Route path="/payment" element={<Payment/>}/>
         </Routes>
         <Footer/>
       </div>
