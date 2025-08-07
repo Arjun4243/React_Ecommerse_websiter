@@ -22,7 +22,8 @@ const payment_send_data = async (req, res) => {
             userId:req.userId,
             items:req.body.items,
             amount:req.body.amount,
-            address:req.body.address
+            address:req.body.address,
+            transectionId:transection_Id
         });
 
         await newOrder.save()
