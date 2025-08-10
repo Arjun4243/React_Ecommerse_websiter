@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import "./payment.css";
+import "./Payment.css";
 import { StoreContext } from '../../context/StoreContext';
 import {useNavigate} from "react-router-dom"
 
