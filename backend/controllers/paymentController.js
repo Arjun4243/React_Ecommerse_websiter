@@ -58,5 +58,38 @@ const userOrders = async (req, res) => {
 };
 
 
+//listing order for admitn 
 
-export {payment_receive_data,payment_send_data,userOrders}
+const listOrders=async(req,res)=>{
+try{
+  const orders=await orderModel.find({});
+  res.json({success:true,data:orders})
+}
+catch(error){
+  console.log(error)
+  res.json({success:false, message:"somthing error to fatch the data"})
+}
+}
+
+//api update order status
+
+const updateStatus = async(req,res)=>{
+
+  try{
+    await orderModel.findByIdAndUpdate(req.body.orderId, { status: req.body.status });
+
+
+    res.json({success:true, message:"Status Updata"})
+
+
+  }
+  catch(error){
+    console.log(error)
+    res.json({success:false,message:"Error"})
+  }
+
+}
+
+
+
+export {payment_receive_data,payment_send_data,userOrders,listOrders,updateStatus}
