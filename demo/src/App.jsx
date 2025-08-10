@@ -8,7 +8,7 @@ import PlaceOrder from './pages/placeOrder/PlaceOrder'
 import "bootstrap/dist/css/bootstrap.rtl.min.css";
 import Footer from './components/footer/Footer';
 import LoginPopUp from './components/LoginPopup/LoginPopUp';
-import Payment from './pages/payment/payment';
+import Payment from './pages/payment/Payment.jsx';
 import MyOrders from './pages/myOrder/MyOrders';
 
 
