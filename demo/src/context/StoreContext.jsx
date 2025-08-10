@@ -5,7 +5,8 @@ export const StoreContext = createContext(null);
 
 export const StoreContextProvider = (props) => {
   const [cartItem, setCartItems] = useState({});
-  const url = "https://react-ecommerse-websiter.onrender.com/";
+  const url = "https://react-ecommerse-websiter.onrender.com";
+
   const [token, setToken] = useState("");
   const [food_list, setFoodList] = useState([]);
   const [isFoodListLoading, setIsFoodListLoading] = useState(true); // ✅ loading state
