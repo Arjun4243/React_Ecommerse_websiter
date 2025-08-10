@@ -12,7 +12,7 @@ dotenv.config();
 
 const app=express()
 
-const port=4000
+const port=process.env.PORT||4000
 
 //middleware
 
@@ -32,9 +32,6 @@ app.use("/api/cart",cartRouter)
 app.use("/api/order",orderRouter)
 app.use("/api/payment",paymentRouter)
 
-app.get("/",(req,res)=>{
-    res.send("API working")
-})
 
 app.listen(port,()=>{
     console.log(`you server is runing on ${port}`)
