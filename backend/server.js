@@ -18,7 +18,7 @@ const port=process.env.PORT||4000
 
 app.use(express.json())
 app.use(cors({
-  origin: "https://your-react-app.onrender.com"
+  origin: "https://react-ecommerse-websiter-frontend.onrender.com"
 }));
 
 
