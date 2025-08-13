@@ -36,6 +36,9 @@
     max-width: max(40%,500px);
 }
 
-.place-order .cart-total button{
-    
+
+@media (max-width: 364px) {
+  .place-order {
+    flex-direction: column;
+  }
 }
