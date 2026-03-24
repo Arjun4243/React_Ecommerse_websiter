@@ -25,13 +25,14 @@ const Cart = () => {
             if (cartItem[e._id] > 0) {
               return (
                 <div key={e._id}>
-                  <div className="cart-items-title cart-items-item">
-                    <img src={url + "/images/" + e.image} alt="" />
-                    <p>{e.name}</p>
-                    <p>${e.price}</p>
-                    <p>{cartItem[e._id]}</p>
-                    <p>${e.price * cartItem[e._id]}</p>
-                    <p className='cross' onClick={() => removeFromCart(e._id)}>x</p>
+                  <div className=" cart-items-item">
+                    
+                    <img src={url + "/images/" + e.image} alt="" className='item-0'/>
+                    <p className='item-1'>{e.name}</p>
+                    <p className='item-2'><b>Price </b>${e.price}</p>
+                    <p className='item-3'><b>Quantity </b>{cartItem[e._id]}</p>
+                    <p className='item-4'><b>Total </b>${e.price * cartItem[e._id]}</p>
+                    <b className='cross item-5' onClick={() => removeFromCart(e._id)}>cancel</b>
                   </div>
                   <hr />
                 </div>

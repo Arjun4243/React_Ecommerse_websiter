@@ -5,7 +5,7 @@ export const StoreContext = createContext(null);
 
 export const StoreContextProvider = (props) => {
   const [cartItem, setCartItems] = useState({});
-  const url = "https://react-ecommerse-websiter.onrender.com";
+const url = window.location.hostname === 'localhost' ? 'http://localhost:5173' : window.location.hostname === '172.16.2.39' ? 'http://172.16.2.39:5173' : 'https://react-ecommerse-websiter.onrender.com';
 
   const [token, setToken] = useState("");
   const [food_list, setFoodList] = useState([]);
