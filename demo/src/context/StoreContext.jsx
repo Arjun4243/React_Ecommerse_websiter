@@ -5,7 +5,7 @@ export const StoreContext = createContext(null);
 
 export const StoreContextProvider = (props) => {
   const [cartItem, setCartItems] = useState({});
-const url = window.location.hostname === 'localhost' ? 'http://localhost:5173' : window.location.hostname === '172.16.2.39' ? 'http://172.16.2.39:5173' : 'https://react-ecommerse-websiter.onrender.com';
+const url = window.location.hostname === 'localhost' ? 'http://localhost:4000' : window.location.hostname === '172.16.2.39' ? 'http://172.16.2.39:4000' : 'https://react-ecommerse-websiter.onrender.com';
 
   const [token, setToken] = useState("");
   const [food_list, setFoodList] = useState([]);
@@ -49,9 +49,14 @@ const url = window.location.hostname === 'localhost' ? 'http://localhost:5173' :
   const fatchFoodList = async () => {
     try {
       const response = await axios.get(url + "/api/food/list");
-      setFoodList(response.data.data); // ✅ log food list
+      if (response.data.success) {
+        setFoodList(response.data.data);
+      } else {
+        setFoodList([]);
+      }
     } catch (error) {
       console.error("Failed to fetch food list:", error);
+      setFoodList([]);
     } finally {
       setIsFoodListLoading(false); // ✅ mark loading complete
     }
