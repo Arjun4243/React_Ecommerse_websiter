@@ -4,10 +4,10 @@ a{
 }
 
 .navbar{
-    padding:20px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 10px;
 }
 
 .navbar .logo{
@@ -37,6 +37,8 @@ a{
     border-radius: 50px;
     cursor:pointer;
 }
+
+
 
 .navbar .active{
     padding-bottom: 2px;
@@ -121,9 +123,6 @@ a{
 
 
 @media (max-width:900px) {
-    .navbar .logo{
-        width: 120px;
-    }
 
     .navbar-menu{
         gap:15px;
@@ -153,4 +152,14 @@ a{
     
 
    
+}
+
+@media (max-width:400px) {
+    #logo{
+        width:7rem;
+    }
+    .navbar-right button{
+        height: 30px;
+        padding: 0px 15px;
+    }
 }

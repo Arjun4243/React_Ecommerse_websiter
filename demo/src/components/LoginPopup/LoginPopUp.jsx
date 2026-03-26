@@ -6,7 +6,7 @@ import { useContext } from "react";
 import axios from "axios";
 const LoginPopUp = ({ setShowLogin }) => {
 
-    const {url,setToken}=useContext(StoreContext);
+    const {url,setToken,setGlobalNotification}=useContext(StoreContext);
     const [currState, setCurrStates] = useState("Sign up");
     
     //login data taking and send to backend
@@ -40,7 +40,8 @@ const LoginPopUp = ({ setShowLogin }) => {
             setToken(response.data.token)
             localStorage.setItem("token",response.data.token)
             setShowLogin(false)
-            alert("you are successfully logged in");
+            setGlobalNotification(true)
+                setTimeout(() => setGlobalNotification(false), 3000)
         }
         else{
             alert(response.data.message);

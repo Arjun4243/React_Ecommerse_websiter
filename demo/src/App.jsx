@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import Navbar from './components/Navbar/Navbar';
 import "./App.css"
 import {Routes,Route} from 'react-router-dom'
@@ -10,15 +10,21 @@ import Footer from './components/footer/Footer';
 import LoginPopUp from './components/LoginPopup/LoginPopUp';
 import Payment from './pages/payment/Payment.jsx';
 import MyOrders from './pages/myOrder/MyOrders';
+import Gnotification from './components/GlobalNotification/Gnotification';
+import { StoreContext } from './context/StoreContext';
+
 
 
 const App = () => {
+
+  const {GlobalNotification} = useContext(StoreContext);
 
   const [showLogin,setShowLogin]=useState(false)
   return (
     <>
       {showLogin ? <LoginPopUp setShowLogin={setShowLogin} /> : null}
       <div className='app'>
+        {GlobalNotification && <Gnotification />}
         <Navbar setShowLogin={setShowLogin}/>
         <Routes>
           <Route path='/' element={<Home/>}/>

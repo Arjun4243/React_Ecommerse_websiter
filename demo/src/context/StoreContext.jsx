@@ -5,7 +5,7 @@ export const StoreContext = createContext(null);
 
 export const StoreContextProvider = (props) => {
   const [cartItem, setCartItems] = useState({});
-const url = window.location.hostname === 'localhost' ? 'http://localhost:4000' : window.location.hostname === '172.16.2.39' ? 'http://172.16.2.39:4000' : 'https://react-ecommerse-websiter.onrender.com';
+  const url = window.location.hostname === 'localhost' ? 'http://localhost:4000' : window.location.hostname === '172.16.2.39' ? 'http://172.16.2.39:4000' : 'https://react-ecommerse-websiter.onrender.com';
 
   const [token, setToken] = useState("");
   const [food_list, setFoodList] = useState([]);
@@ -87,10 +87,16 @@ const url = window.location.hostname === 'localhost' ? 'http://localhost:4000' :
     loadData();
   }, []);
 
-  
-  const [transection_id,setTransection_id] = useState()
-  const [paymentTotalAmount,setPaymentTotalAmount]=useState()
+
+  const [GlobalNotification, setGlobalNotification] = useState(false)
+
+  const [transection_id, setTransection_id] = useState()
+  const [paymentTotalAmount, setPaymentTotalAmount] = useState()
   const contextValue = {
+
+    GlobalNotification,
+    setGlobalNotification,
+
     food_list,
     cartItem,
     setCartItems,
@@ -105,7 +111,7 @@ const url = window.location.hostname === 'localhost' ? 'http://localhost:4000' :
     transection_id,
     paymentTotalAmount,
     setPaymentTotalAmount,
-    
+
 
   };
 
