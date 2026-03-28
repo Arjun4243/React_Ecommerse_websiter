@@ -6,7 +6,7 @@ import { useContext } from "react";
 import axios from "axios";
 const LoginPopUp = ({ setShowLogin }) => {
 
-    const {url,setToken,setGlobalNotification}=useContext(StoreContext);
+    const {url,setToken,setGlobalNotification,setText}=useContext(StoreContext);
     const [currState, setCurrStates] = useState("Sign up");
     
     //login data taking and send to backend
@@ -23,7 +23,7 @@ const LoginPopUp = ({ setShowLogin }) => {
         setData(data=>({...data, [name]: value}));
     }
 
-    const onLogin=async(even)=>{
+    const onLogin=async(event)=>{
         event.preventDefault();
         let newUrl=url;
         if(currState==="Login"){
@@ -40,12 +40,30 @@ const LoginPopUp = ({ setShowLogin }) => {
             setToken(response.data.token)
             localStorage.setItem("token",response.data.token)
             setShowLogin(false)
+
+                  setText({
+                    text: response.data.notification.text,
+                    icon: response.data.notification.icon,
+                    message: response.data.notification.message,
+                  })
+
+
+
             setGlobalNotification(true)
-                setTimeout(() => setGlobalNotification(false), 3000)
+                setTimeout(() => setGlobalNotification(false), 5000)
         }
         else{
-            alert(response.data.message);
-            console.error(response.data.message);
+            setText({
+                text:response.data.notification.text,
+                icon:response.data.notification.icon,
+                message:response.data.notification.message
+            })
+
+            setGlobalNotification(true)
+            setTimeout(()=>{
+                setGlobalNotification(false)
+            }, 5000)
+            
         }
     }
 

@@ -6,37 +6,52 @@ import dotenv from "dotenv";
 dotenv.config();
 //login user
 const loginUser = async (req, res) => {
-    const {email,password}=req.body;
-    try{
-        const user = await userModel.findOne({email})
-        if(!user){
-            return res.json({
-                success:false,
-                message:"User not found"
-            })
+    const { email, password } = req.body;
 
-        }
-        const isMatch=await bcrypt.compare(password,user.password);
-        if(!isMatch){
-            return res.json({
-                success:false,
-                message:"Invalid credentials"
-            })
-
-        }
-
-    const token=createToken(user._id);
-    res.json({
-        success:true,
-        token
-    })
+    if (!email || !password) {
+        return res.json({
+            success: false,
+            message: "Email and password are required",
+        });
     }
-    catch(err){
+
+    try {
+        const user = await userModel.findOne({ email });
+        if (!user) {
+            return res.json({
+                success: false,
+                notification:{
+                    text: "Login failed",
+                    icon: "✗",
+                    message: "Please Enter correct Email and password",
+                }
+            });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.json({
+                success: false,
+                message: "Invalid credentials",
+            });
+        }
+
+        const token = createToken(user._id);
+        return res.json({
+            success: true,
+            notification: {
+                text: "Login successful",
+                icon: "✓",
+                message: "You have been logged in successfully.",
+            },
+            token,
+        });
+    } catch (err) {
         console.log(err);
-        res.json({
-            success:false,
-            message:"Error"
-        })
+        return res.json({
+            success: false,
+            message: "Error",
+        });
     }
 };
 

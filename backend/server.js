@@ -17,6 +17,7 @@ const port=process.env.PORT||4000
 //middleware
 
 app.use(express.json())
+
 app.use(cors({
   origin: ["https://react-ecommerse-websiter-frontend.onrender.com", "http://172.16.2.39:5173", "http://localhost:5173"]
 }));

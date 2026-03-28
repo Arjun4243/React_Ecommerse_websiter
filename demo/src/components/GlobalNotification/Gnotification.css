@@ -10,7 +10,7 @@
     justify-content: center;
     gap: 0.5rem;
     min-width: 280px;
-    max-width: 90vw;
+    max-width: 70vw;
     padding: 1rem 1.25rem;
     border-radius: 12px;
     background-color: #f0f8ff;
@@ -23,9 +23,9 @@
 }
 
 .container.success {
-    border-color: #28a745;
+    border-color:white;
     background-color: #e6f5ea;
-    color: #1f5b2e;
+    color:whitesmoke
 }
 
 .container.error {
@@ -50,20 +50,23 @@
     line-height: 1.4;
 }
 
-.icon {
+.content {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
-    background-color: green;
+    background-color:green;
     color: white;
     font-size: 2rem;
     font-weight: bold;
     font-style: normal;
 }
+.icon{
+    color:white;
 
+}
 @media (max-width: 480px) {
     .container {
         min-width: 240px;

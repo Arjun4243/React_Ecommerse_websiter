@@ -88,14 +88,41 @@ export const StoreContextProvider = (props) => {
   }, []);
 
 
-  const [GlobalNotification, setGlobalNotification] = useState(false)
+
 
   const [transection_id, setTransection_id] = useState()
   const [paymentTotalAmount, setPaymentTotalAmount] = useState()
-  const contextValue = {
 
+
+  {/*notification related code i have write here*/ }
+
+  const [GlobalNotification, setGlobalNotification] = useState(false)
+
+  const [text, setText] = useState({
+    text: "",
+    Icon: "",
+    message: ""
+  })
+
+  console.log(text)
+
+  // useEffect(async () => {
+  //   const response = await axios.get(url + "/api/user/login")
+  //   if (response.data.sucess) {
+  //     setText({
+  //       text: response.data.notification.text,
+  //       Icon: response.data.notification.Icon,
+  //       message: response.data.notification.message,
+  //     })
+  //   }
+  // }, [url])
+
+  const contextValue = {
+   
     GlobalNotification,
     setGlobalNotification,
+    setText,
+    text,
 
     food_list,
     cartItem,
