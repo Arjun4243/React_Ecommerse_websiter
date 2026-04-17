@@ -10,7 +10,7 @@ const Navbar = ({ setShowLogin }) => {
 
     const [menu, setMenu] = useState("Home")
 
-    const { getTotalCartAmount, token } = useContext(StoreContext)
+    const { getTotalCartAmount, token,setToken,setText ,setGlobalNotification} = useContext(StoreContext)
 
     //const navigate =useNavigate();
 
@@ -18,6 +18,18 @@ const Navbar = ({ setShowLogin }) => {
         localStorage.removeItem("token");
         setToken("")
         navigate("/")
+        setText({
+            text:"Log-out successfull",
+            icon:"✓",
+            message:"You have been logged out successfully."
+        })
+        setGlobalNotification(true)
+
+        setTimeout(()=>{
+            setGlobalNotification(false)
+        },5000)
+        
+
     }
     return (
         <div className='navbar'>

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import axios from 'axios'
 import './Add.css'
 import { toast } from 'react-toastify';
 function Add() {
@@ -29,31 +28,28 @@ function Add() {
   formData.append("category",data.category);
   formData.append("image",image);
 
-  const response = await axios.post(`${url}/api/food/add`, formData)
-    if(response.data.success)
-      {
-        setData({
-          name:"",
-          description:"",
-          price:"",
-          category:""
-        })
+  try {
+    const response = await fetch(`${url}/api/food/add`, {
+      method: 'POST',
+      body: formData,
+    });
+    const result = await response.json();
+    if (response.ok && result.success) {
+      setData({
+        name:"",
+        description:"",
+        price:"",
+        category:""
+      })
 
-        setImage(false);
-        toast.success(response.data.message)
-      }
-      else(
-        toast.error(response.data.message)
-      )
- }
-
-  return (
-    <div className="add">
-      <form className='flex-col'>
-      <div className="add-img-upload flex-col">
-        <p>Upload image</p>
-        <label htmlFor='image'>
-          <img src={image ? URL.createObjectURL(image) : assets.upload_area} alt="profile image" />
+      setImage(false);
+      toast.success(result.message)
+    } else {
+      toast.error(result.message || 'Error adding food');
+    }
+  } catch (error) {
+    toast.error('Network error');
+  }
         </label>
         <input onChange={(e)=>(setImage(e.target.files[0]))} type='file' id="image" hidden required />
       </div>

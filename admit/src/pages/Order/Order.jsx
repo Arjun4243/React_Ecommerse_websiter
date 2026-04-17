@@ -3,7 +3,6 @@ import { assets } from '../../assets/assets';
 import './Order.css';
 
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css'; // ✅ Correct Bootstrap import
 
 function Order({ url }) {
@@ -11,27 +10,36 @@ function Order({ url }) {
 
   const fetchAllOrders = async () => {
     try {
-      const response = await axios.get(url + '/api/payment/list');
-      if (response.data.success) {
-        setOrders(response.data.data);
-        console.log(response.data.data);
+      const response = await fetch(url + '/api/payment/list');
+      const data = await response.json();
+      if (response.ok && data.success) {
+        setOrders(data.data);
+        console.log(data.data);
       } else {
-        toast.error('Error fetching orders');
+        toast.error(data.message || 'Error fetching orders');
       }
     } catch (error) {
       toast.error('Network error');
     }
   };
 
-  const statusHandler= async(event,orderId)=>{
-
-    const response=await axios.post(url+"/api/payment/status",{orderId,status:event.target.value})
-
-    if(response.data.success){
-      await fetchAllOrders();
+  const statusHandler = async (event, orderId) => {
+    try {
+      const response = await fetch(url + '/api/payment/status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId, status: event.target.value }),
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        await fetchAllOrders();
+      } else {
+        toast.error(data.message || 'Error updating status');
+      }
+    } catch (error) {
+      toast.error('Network error');
     }
-
-  }
+  };
 
   useEffect(() => {
     fetchAllOrders();
@@ -68,7 +76,7 @@ function Order({ url }) {
             <p>Items: {order.items.length}</p>
             <p className='text-success'>${order.amount}</p>
 
-            <select onChange={()=>statusHandler(event,order._id)} value={order.status} className="btn btn-success text-decoration-none">
+            <select onChange={(event) => statusHandler(event, order._id)} value={order.status} className="btn btn-success text-decoration-none">
               <option value="Food Processing">Food Processing</option>
               <option value="Out for Delivery">Out For Delivery</option>
               <option value="Delivered">Delivered</option>

@@ -3,7 +3,6 @@ import "./PlaceOrder.css"
 import { StoreContext } from '../../context/StoreContext'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 
 const PlaceOrder = () => {
@@ -60,17 +59,33 @@ const navigate = useNavigate();
       amount:getTotalCartAmount()+2,
     }
 
-    let response=await axios.post(url+"/api/order/place",orderData,{headers:{token}});
-    let paymentSend= await axios.post(url+"/api/payment/send",orderData,{headers:{token}})
+    const response = await fetch(url + "/api/order/place", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        token,
+      },
+      body: JSON.stringify(orderData),
+    });
+    const responseData = await response.json();
 
-    if(paymentSend.data.success)
-    {
-      setTransection_id(paymentSend.data.transectionId)
-      setPaymentTotalAmount(paymentSend.data.totalAmount)
-      console.log("transection Id",paymentSend.data.transectionId)
+    const paymentSend = await fetch(url + "/api/payment/send", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        token,
+      },
+      body: JSON.stringify(orderData),
+    });
+    const paymentData = await paymentSend.json();
+
+    if (paymentSend.ok && paymentData.success) {
+      setTransection_id(paymentData.transectionId)
+      setPaymentTotalAmount(paymentData.totalAmount)
+      console.log("transection Id", paymentData.transectionId)
     }
 
-    if(response.data.sucsess){
+    if (response.ok && responseData.success) {
       window.location.replace(session_url)
     }
   }

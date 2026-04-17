@@ -3,73 +3,99 @@ import "./LoginPopUp.css";
 import { assets } from "../../assets/assets";
 import { StoreContext } from "../../context/StoreContext";
 import { useContext } from "react";
-import axios from "axios";
 const LoginPopUp = ({ setShowLogin }) => {
 
-    const {url,setToken,setGlobalNotification,setText}=useContext(StoreContext);
+    const { url, setToken, setGlobalNotification, setText } = useContext(StoreContext);
     const [currState, setCurrStates] = useState("Sign up");
-    
+
     //login data taking and send to backend
-    const [data,setData]=useState({
+    const [data, setData] = useState({
         name: "",
         email: "",
         password: ""
     })
 
-    const onChangeHandler=(event)=>{
-        const name=event.target.name;
-        const value=event.target.value;
+    const onChangeHandler = (event) => {
+        event.preventDefault();
+        const name = event.target.name;
+        const value = event.target.value;
 
-        setData(data=>({...data, [name]: value}));
+        setData(data => ({ ...data, [name]: value }));
+
+      
+
+
     }
 
-    const onLogin=async(event)=>{
+    // const run = (state) => {
+    //     if (state === "Sign up") {
+    //           setGlobalNotification(true)
+    //     setText({
+    //         text: "Registration successful",
+    //         icon: "✓",
+    //         message: "You have been registered successfully."
+    //     })
+
+    //     setTimeout(() => {
+    //         setGlobalNotification(false)
+    //     }, 5000)
+    //     }
+    // }
+
+    const onLogin = async (event) => {
         event.preventDefault();
-        let newUrl=url;
-        if(currState==="Login"){
+        let newUrl = url;
+        if (currState === "Login") {
             newUrl += "/api/user/login"
         }
-        else{
+        else {
             newUrl += "/api/user/register"
 
         }
 
-        const response = await axios.post(newUrl,data)
+        const response = await fetch(newUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+        });
+        const result = await response.json();
 
-        if(response.data.success){
-            setToken(response.data.token)
-            localStorage.setItem("token",response.data.token)
+        if (response.ok && result.success) {
+            setToken(result.token)
+            localStorage.setItem("token", result.token)
             setShowLogin(false)
 
-                  setText({
-                    text: response.data.notification.text,
-                    icon: response.data.notification.icon,
-                    message: response.data.notification.message,
-                  })
+            setText({
+                text: result.notification.text,
+                icon: result.notification.icon,
+                message: result.notification.message,
+            })
 
 
 
             setGlobalNotification(true)
-                setTimeout(() => setGlobalNotification(false), 5000)
+            setTimeout(() => setGlobalNotification(false), 5000)
         }
-        else{
+        else {
             setText({
-                text:response.data.notification.text,
-                icon:response.data.notification.icon,
-                message:response.data.notification.message
+                text: result.notification.text,
+                icon: result.notification.icon,
+                message: result.notification.message
             })
 
             setGlobalNotification(true)
-            setTimeout(()=>{
+            setTimeout(() => {
                 setGlobalNotification(false)
             }, 5000)
-            
+
         }
     }
 
     return (
         <div className="login-popup">
-            <form onSubmit={onLogin}action="" className="login-popup-container">
+            <form onSubmit={onLogin} action="" className="login-popup-container">
                 <div className="login-popup-title">
                     <h2>{currState}</h2>
                     <img
@@ -80,11 +106,11 @@ const LoginPopUp = ({ setShowLogin }) => {
                 </div>
 
                 <div className="login-popup-inputs">
-                    {currState === "Login" ? 
+                    {currState === "Login" ?
                         <></>
-                     : (
-                        <input type="text" name="name" onChange={onChangeHandler} placeholder="You name" required></input>
-                    )}
+                        : (
+                            <input type="text" name="name" onChange={onChangeHandler} placeholder="You name" required></input>
+                        )}
 
                     <input type="email" name="email" onChange={onChangeHandler} placeholder="you email" required />
                     <input type="password" name="password" onChange={onChangeHandler} placeholder="password" required />
@@ -96,11 +122,11 @@ const LoginPopUp = ({ setShowLogin }) => {
                 </div>
                 {currState === "Login" ? (
                     <p>
-                        Create new account?<span onClick={()=>{setCurrStates("Sign Up")}}>click me</span>
+                        Create new account?<span onClick={() => { setCurrStates("Sign Up") }}>click me</span>
                     </p>
                 ) : (
                     <p>
-                        Already have an accound?<span onClick={()=>{setCurrStates("Login")}}>Login here</span>
+                        Already have an accound?<span onClick={() => { setCurrStates("Login") }}>Login here</span>
                     </p>
                 )}
             </form>

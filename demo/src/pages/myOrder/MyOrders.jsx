@@ -3,7 +3,6 @@ import "./MyOrders.css"
 import { useContext } from 'react'
 import { StoreContext } from '../../context/StoreContext'
 import { useEffect, useState } from 'react'
-import axios from "axios"
 import { assets } from "../../assets/assets.js"
 const MyOrders = () => {
 
@@ -11,9 +10,25 @@ const MyOrders = () => {
   const [data, setData] = useState([])
 
   const fetchOder = async () => {
-    const response = await axios.post(url + "/api/payment/userOrders", {}, { headers: { token } });
-    setData(response.data.data);
-    console.log(response.data.data);
+    try {
+      const response = await fetch(url + "/api/payment/userOrders", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          token,
+        },
+        body: JSON.stringify({}),
+      });
+      const result = await response.json();
+      if (response.ok && result.success) {
+        setData(result.data);
+        console.log(result.data);
+      } else {
+        console.error(result.message || 'Error loading orders');
+      }
+    } catch (error) {
+      console.error('Network error', error);
+    }
   };
 
 

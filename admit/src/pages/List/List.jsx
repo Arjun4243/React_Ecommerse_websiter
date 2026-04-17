@@ -1,7 +1,6 @@
 import React from 'react'
 import "./List.css"
 import { useState } from 'react'
-import axios from 'axios'
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 function List() {
@@ -9,25 +8,37 @@ function List() {
   const [list,setList]=useState([])
   const url="http://localhost:4000";
   const fetchList= async()=>{
-    const response = await axios.get(`${url}/api/food/list`);
-    if(response.data.success){
-      console.log(response.data);
-      setList(response.data.data);
-    }
-    else{
-      toast.error(response.data.message);
+    try {
+      const response = await fetch(`${url}/api/food/list`);
+      const data = await response.json();
+      if (response.ok && data.success) {
+        console.log(data);
+        setList(data.data);
+      } else {
+        toast.error(data.message || 'Error fetching food list');
+      }
+    } catch (error) {
+      toast.error('Network error');
     }
   }
 
 
   const removeFood=async(foodId)=>{
-    const response =await axios.post(`${url}/api/food/remove`,{id:foodId});
-    await fetchList();
-    if(response.data.success){
-      toast.success(response.data.message)
-    }
-    else{
-      toast.error("error")
+    try {
+      const response = await fetch(`${url}/api/food/remove`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: foodId }),
+      });
+      const data = await response.json();
+      await fetchList();
+      if (response.ok && data.success) {
+        toast.success(data.message);
+      } else {
+        toast.error(data.message || 'Error removing food');
+      }
+    } catch (error) {
+      toast.error('Network error');
     }
   }
   useEffect(()=>{
